@@ -13,6 +13,9 @@ public func yapRun() {
 
     if let index = arguments.firstIndex(of: "--transcribe"), index + 1 < arguments.count {
         let url = URL(fileURLWithPath: arguments[index + 1])
+        MainActor.assumeIsolated {
+            ModelStatus.onChange = { old, new in print("model: \(old) → \(new)") }
+        }
         Task.detached {
             do {
                 let started = Date()

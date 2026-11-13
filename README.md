@@ -16,7 +16,7 @@ Needs a Mac with Apple Silicon (M1 or later) and macOS 14 or later.
 2. Open Yap from Applications. macOS says it cannot verify the app, because Yap is not signed with a paid Apple developer certificate. Click Done, open System Settings → Privacy & Security, scroll down to the message about Yap and click Open Anyway. This is needed once per version.
 3. Allow the microphone when Yap asks.
 4. When macOS asks to let Yap control your computer, click Open System Settings and turn Yap on under Accessibility. Yap needs it to notice the right ⌥ key in other apps and to paste.
-5. Wait for the speech model to download, about 600 MB, once. The menu of the waveform icon in the menu bar shows the progress, and Yap tells you when it is ready.
+5. Wait for the speech model to download, about 600 MB, once. Until it is in, the menu of the waveform icon in the menu bar says it is downloading, and Yap tells you when it is ready.
 
 To start Yap with your Mac, click the waveform icon and turn on Open at login.
 

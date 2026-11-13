@@ -52,9 +52,8 @@ final class DictationController {
             pill.flash(.notice(ui("No access to the microphone", ru: "Нет доступа к микрофону")), seconds: 2.5)
             return
         }
-        if case .downloading(let fraction) = ModelStatus.state {
-            let percent = Int(fraction * 100)
-            pill.flash(.download(ui("Downloading the model: \(percent)%", ru: "Скачиваю модель: \(percent)%")), seconds: 2.5)
+        if ModelStatus.state == .downloading {
+            pill.flash(.download(ui("The model is still downloading", ru: "Модель ещё скачивается")), seconds: 2.5)
             return
         }
         Chime.playStart()

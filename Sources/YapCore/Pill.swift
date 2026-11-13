@@ -368,7 +368,7 @@ enum PillPreview {
         let phases: [(String, PillModel.Phase)] = [
             ("recording", .recording), ("transcribing", .transcribing),
             ("copied", .done(Phrase.copied)), ("notice", .notice(ui("Heard nothing", ru: "Ничего не услышал"))),
-            ("download", .download(ui("Downloading the model: 42%", ru: "Скачиваю модель: 42%"))),
+            ("download", .download(ui("The model is still downloading", ru: "Модель ещё скачивается"))),
             ("ready", .done(ui("Ready: tap right ⌥ and speak", ru: "Готово: нажми правый ⌥ и говори"))),
         ]
         let desktop = LinearGradient(colors: [Color(red: 0.2, green: 0.35, blue: 0.6), Color(red: 0.85, green: 0.6, blue: 0.45)],

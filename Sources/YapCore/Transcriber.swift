@@ -1,13 +1,13 @@
 import Foundation
 import FluidAudio
 
-/// Where the speech model stands. The first launch downloads it, about 600 MB, so the menu shows the progress,
+/// Where the speech model stands. The first launch downloads it, about 600 MB, so the menu says so,
 /// and a dictation started before it arrives says so instead of waiting minutes for it.
 @MainActor
 enum ModelStatus {
     enum State: Equatable {
         case loading
-        case downloading(Double)
+        case downloading
         case ready
         case failed
     }
@@ -32,15 +32,17 @@ actor Transcriber {
             await MainActor.run { ModelStatus.state = .loading }
             Transcriber.reuseSpokenlyModel()
             let models = try await AsrModels.downloadAndLoad(version: .ultra, progressHandler: { progress in
+                // A model already on disk reports a finished download of zero files; only a real one counts,
+                // and it stays "downloading" through the compile steps between files until the model is ready.
                 let downloading: Bool
                 switch progress.phase {
-                case .listing, .downloading: downloading = true
+                case .listing: downloading = true
+                case .downloading(_, let totalFiles): downloading = totalFiles > 0
                 case .compiling: downloading = false
                 }
-                let fraction = progress.fractionCompleted
                 // A main-actor task, not assumeIsolated on the main queue: the --transcribe check runs under
                 // dispatchMain(), where main-queue blocks leave the main thread and that assumption crashes.
-                Task { @MainActor in ModelStatus.state = downloading ? .downloading(fraction) : .loading }
+                if downloading { Task { @MainActor in ModelStatus.state = .downloading } }
             })
             let manager = AsrManager(config: .default)
             try await manager.loadModels(models)

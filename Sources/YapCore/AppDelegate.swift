@@ -105,9 +105,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return nil
         case .loading:
             return ui("Loading the speech model…", ru: "Загружаю модель распознавания…")
-        case .downloading(let fraction):
-            let percent = Int(fraction * 100)
-            return ui("Downloading the speech model: \(percent)%", ru: "Скачиваю модель распознавания: \(percent)%")
+        case .downloading:
+            return ui("Downloading the speech model, about 600 MB…", ru: "Скачиваю модель распознавания, около 600 МБ…")
         case .failed:
             return ui("The speech model did not load. Try again", ru: "Модель не загрузилась. Попробовать ещё раз")
         }
